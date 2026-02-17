@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "incidents",
+    "attributes": {
+      "declared": "2025-01-01T00:00:00Z",
+      "detected": "2025-01-01T00:00:00Z",
+      "title": "Example-Incident",
+      "visibility": "organization"
+    }
+  }
+}
