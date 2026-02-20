@@ -9512,22 +9512,6 @@ menu:
         unstable:
           - v2
         order: 5
-    - name: Integrations
-      url: /api/latest/integrations/
-      identifier: integrations
-      generated: true
-    - name: List Integrations
-      url: '#list-integrations'
-      identifier: integrations-list-integrations
-      parent: integrations
-      generated: true
-      params:
-        versions:
-          - v2
-        operationids:
-          - ListIntegrations
-        unstable: []
-        order: 1
     - name: Jira Integration
       url: /api/latest/jira-integration/
       identifier: jira-integration
@@ -12957,6 +12941,42 @@ menu:
       url: /api/latest/status-pages/
       identifier: status-pages
       generated: true
+    - name: Update maintenance
+      url: '#update-maintenance'
+      identifier: status-pages-update-maintenance
+      parent: status-pages
+      generated: true
+      params:
+        versions:
+          - v2
+        operationids:
+          - UpdateMaintenance
+        unstable: []
+        order: 17
+    - name: Get maintenance
+      url: '#get-maintenance'
+      identifier: status-pages-get-maintenance
+      parent: status-pages
+      generated: true
+      params:
+        versions:
+          - v2
+        operationids:
+          - GetMaintenance
+        unstable: []
+        order: 19
+    - name: Create maintenance
+      url: '#create-maintenance'
+      identifier: status-pages-create-maintenance
+      parent: status-pages
+      generated: true
+      params:
+        versions:
+          - v2
+        operationids:
+          - CreateMaintenance
+        unstable: []
+        order: 16
     - name: Update degradation
       url: '#update-degradation'
       identifier: status-pages-update-degradation
@@ -13101,6 +13121,18 @@ menu:
           - DeleteStatusPage
         unstable: []
         order: 5
+    - name: List maintenances
+      url: '#list-maintenances'
+      identifier: status-pages-list-maintenances
+      parent: status-pages
+      generated: true
+      params:
+        versions:
+          - v2
+        operationids:
+          - ListMaintenances
+        unstable: []
+        order: 18
     - name: List degradations
       url: '#list-degradations'
       identifier: status-pages-list-degradations
