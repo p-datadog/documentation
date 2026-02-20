@@ -1736,9 +1736,6 @@
     "description": "Get all users for a ServiceNow instance.",
     "summary": "List ServiceNow users"
   },
-  "ListIntegrations": {
-    "summary": "List Integrations"
-  },
   "ListCloudflareAccounts": {
     "description": "List Cloudflare accounts.",
     "summary": "List Cloudflare accounts"
