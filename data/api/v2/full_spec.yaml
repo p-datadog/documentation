@@ -47473,6 +47473,49 @@ components:
       type: string
       x-enum-varnames:
       - PROCESS
+    ProductAnalyticsAccount:
+      description: The account linked to your event.
+      properties:
+        id:
+          description: The account ID used in Datadog.
+          example: account-67890
+          type: string
+      required:
+      - id
+      type: object
+    ProductAnalyticsApplication:
+      description: The application in which you want to send your events.
+      properties:
+        id:
+          description: 'The application ID of your application. It can be found in
+            your
+
+            [application management page](https://app.datadoghq.com/rum/list).'
+          example: 123abcde-123a-123b-1234-123456789abc
+          type: string
+      required:
+      - id
+      type: object
+    ProductAnalyticsEvent:
+      description: Fields used for the event.
+      properties:
+        name:
+          description: The name of your event, which is used for search in the same
+            way as view or action names.
+          example: payment.processed
+          type: string
+      required:
+      - name
+      type: object
+    ProductAnalyticsEventType:
+      description: The type of Product Analytics event. Must be `server` for server-side
+        events.
+      enum:
+      - server
+      example: server
+      type: string
+      x-enum-varnames:
+      - SERVER
     ProductAnalyticsServerSideEventError:
       description: Error details.
       properties:
@@ -47499,60 +47542,33 @@ components:
           type: array
       type: object
     ProductAnalyticsServerSideEventItem:
+      additionalProperties:
+        description: 'Any additional facet you want to be able to use when searching
+          for events in Datadog.
+
+          These are flattened. For example, `{"customer": {"tier": "premium"}}` is
+
+          searchable with the syntax `@customer.tier:premium` in Datadog.'
       description: A Product Analytics server-side event.
       properties:
         account:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemAccount'
+          $ref: '#/components/schemas/ProductAnalyticsAccount'
         application:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemApplication'
+          $ref: '#/components/schemas/ProductAnalyticsApplication'
         event:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemEvent'
+          $ref: '#/components/schemas/ProductAnalyticsEvent'
         session:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemSession'
+          $ref: '#/components/schemas/ProductAnalyticsSession'
         type:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemType'
+          $ref: '#/components/schemas/ProductAnalyticsEventType'
         usr:
-          $ref: '#/components/schemas/ProductAnalyticsServerSideEventItemUsr'
+          $ref: '#/components/schemas/ProductAnalyticsUser'
       required:
       - application
       - event
       - type
       type: object
-    ProductAnalyticsServerSideEventItemAccount:
-      description: The account linked to your event.
-      properties:
-        id:
-          description: The account ID used in Datadog.
-          example: account-67890
-          type: string
-      required:
-      - id
-      type: object
-    ProductAnalyticsServerSideEventItemApplication:
-      description: The application in which you want to send your events.
-      properties:
-        id:
-          description: 'The application ID of your application. It can be found in
-            your
-
-            [application management page](https://app.datadoghq.com/rum/list).'
-          example: 123abcde-123a-123b-1234-123456789abc
-          type: string
-      required:
-      - id
-      type: object
-    ProductAnalyticsServerSideEventItemEvent:
-      description: Fields used for the event.
-      properties:
-        name:
-          description: The name of your event, which is used for search in the same
-            way as view or action names.
-          example: payment.processed
-          type: string
-      required:
-      - name
-      type: object
-    ProductAnalyticsServerSideEventItemSession:
+    ProductAnalyticsSession:
       description: The session linked to your event.
       properties:
         id:
@@ -47562,16 +47578,7 @@ components:
       required:
       - id
       type: object
-    ProductAnalyticsServerSideEventItemType:
-      description: The type of Product Analytics event. Must be `server` for server-side
-        events.
-      enum:
-      - server
-      example: server
-      type: string
-      x-enum-varnames:
-      - SERVER
-    ProductAnalyticsServerSideEventItemUsr:
+    ProductAnalyticsUser:
       description: The user linked to your event.
       properties:
         id:
@@ -91896,21 +91903,18 @@ paths:
       security:
       - apiKeyAuth: []
       servers:
-      - url: https://{subdomain}.{site}
+      - url: https://{name}
         variables:
-          site:
-            default: datadoghq.com
-            description: The regional site for customers.
+          name:
+            default: browser-intake-datadoghq.com
+            description: The intake domain for the regional site.
             enum:
-            - datadoghq.com
-            - us3.datadoghq.com
-            - us5.datadoghq.com
-            - ap1.datadoghq.com
-            - ap2.datadoghq.com
-            - datadoghq.eu
-          subdomain:
-            default: browser-intake
-            description: The subdomain where the API is deployed.
+            - browser-intake-datadoghq.com
+            - browser-intake-us3-datadoghq.com
+            - browser-intake-us5-datadoghq.com
+            - browser-intake-ap1-datadoghq.com
+            - browser-intake-ap2-datadoghq.com
+            - browser-intake-datadoghq.eu
       - url: '{protocol}://{name}'
         variables:
           name:
@@ -91919,14 +91923,11 @@ paths:
           protocol:
             default: https
             description: The protocol for accessing the API.
-      - url: https://{subdomain}.{site}
+      - url: https://{name}
         variables:
-          site:
-            default: datadoghq.com
+          name:
+            default: browser-intake-datadoghq.com
             description: Any Datadog deployment.
-          subdomain:
-            default: browser-intake
-            description: The subdomain where the API is deployed.
       summary: Send server-side events
       tags:
       - Product Analytics
